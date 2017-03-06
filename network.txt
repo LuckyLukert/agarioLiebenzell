@@ -57,56 +57,69 @@
 
 //Detaillierte Übersicht der (TCP-JSON) Pakete:
 
-"join":{
+{
+  "event": "join",
   "world":"world",
   "id":"int"
 }
-"joinWatcher":{
+{ "event": "joinWatcher",
   "world":"world"
 }
-"playerJoined":{
+{
+  "event":"playerJoined",
   "id":"int",
   "player":"player"
 }
-"playerKilled":{
+{
+  "event": "playerKilled",
   "id":"int"
 }
-"playerMoves":[{
+{
+  "event": "playerMoves",
+  "moves": [{
   "id":"int",
-  "balls":["ball"]
-}]
-"obstacleAdd":{
-  "id":"int",
-  "ball":"ball"
+  "balls":["ball"]}]
 }
-"obstacleRemove":{
-  "id":"int"
-}
-"foodAdd":{
+{
+  "event": "obstacleAdd",
   "id":"int",
   "ball":"ball"
 }
-"foodRemove":{
+{
+  "event": "obstacleRemove",
   "id":"int"
 }
-"foodMove":{
+{
+  "event": "foodAdd",
+  "id":"int",
+  "ball":"ball"
+}
+{
+  "event": "foodRemove",
+  "id":"int"
+}
+{
+  "event": "foodMove",
   "id":"int",
   "ball":"ball"
 }
 
 //Client to Server
 
-"wantToJoin":{
+{
+  "event": "wantToJoin",
   "name":"string"
 }
-"wantToWatch":{
+{
+  "event": "wantToWatch",
 }
-"move":{
+{
+  "event": "move":
   "direction":"vector"
 }
-"shoot":{
-
+{
+  "event": "shoot"
 }
-"split":{
-
+{
+  "event": "split"
 }
