@@ -1,26 +1,26 @@
 from json import JSONDecoder
-from server1 import *
+import eventhandler
 
+# TODO implement events in network
 eventsExecute = {
-    "join": lambda world: pass,
-
-
-
+    'wantToJoin': lambda event, world: ,
+    'move': lambda event, world: 
 }
 
 
 def eventFromJSON(json):
     decode = JSONDecoder().decode(json)
-    for key in decode:
-        return Event(key, **decode[key])
+    return Event(**decode)
 
 class Event:
     def __init__(self, name, **entries):
-        self.event = name
+        self.event = None
         self.__dict__.update(entries)
 
+
     def __init__(self, name):
-        self.eventName = name
+        self.event = name
 
     def execute(self, world):
+        eventsExecute[self.event](self, world)
 

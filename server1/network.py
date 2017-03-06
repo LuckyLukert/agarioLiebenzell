@@ -1,7 +1,7 @@
 import socketserver
 import socket
 import threading
-from server1 import *
+import event
 
 class ServerThread(threading.Thread):
 
@@ -32,7 +32,7 @@ class ServerThread(threading.Thread):
             client.send( bytearray("Agar IO Test: Recv " +data, "utf-8"))
 
             ## Fire event
-            
+
 
     def send(self, client, data):
         client.send(data=data)
