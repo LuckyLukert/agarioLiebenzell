@@ -9,14 +9,14 @@
 
 "player":{
   "name":"string",
-  "color":"string",
   "balls":["ball"]
 }
 
 "ball":{
   "pos":"point",
   "speed":"vector",
-  "size":"int"
+  "size":"int",
+  "color":"string"
 }
 
 "point/vector":{
@@ -74,7 +74,7 @@
 }]
 "obstacleAdd":{
   "id":"int",
-  "pos":"point"
+  "ball":"ball"
 }
 "obstacleRemove":{
   "id":"int"
