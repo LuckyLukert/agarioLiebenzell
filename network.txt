@@ -1,3 +1,5 @@
+# Encoding: UTF-8
+
 
 "world":{
   "food":{"id":"ball"},
