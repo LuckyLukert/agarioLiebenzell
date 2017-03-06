@@ -1,0 +1,103 @@
+
+"world":{
+  "food":{"id":"ball"},
+  "obstackles":{"id":"point"},
+  "players":{"id":"player"},
+  "width":"int",
+  "height":"int"
+}
+
+"player":{
+  "name":"string",
+  "color":"string",
+  "balls":["ball"]
+}
+
+"ball":{
+  "pos":"point",
+  "speed":"vector",
+  "size":"int"
+}
+
+"point/vector":{
+  "x":"int",
+  "y":"int"
+}
+
+
+//Pakete-Übersicht:
+
+//Server to Client:
+////init's
+-"join"           //Welt wird übergeben + eigene ID
+-"joinWatcher"    //Welt wird übergeben
+
+////changes
+-"playerJoined"   //anderer Spieler spawnt
+-"playerKilled"   //anderer Spieler verschwindet
+-"playerMoves"    //Bewegungen von allen Spielern + speed-updates
+
+-"obstackleAdd"
+-"obstackleRemove"
+
+-"foodAdd"
+-"foodRemove"
+-"foodMove"
+
+
+//Client to Server:
+-"want to join"   //verbindet sich zu Server
+-"want to view"   //verbindet sich als watcher
+-"move"           //Richtung+Geschwindigkeit, in die sich der Client bewegen will
+
+
+
+//Detaillierte Übersicht der (TCP-JSON) Pakete:
+
+"join":{
+  "world":"world",
+  "id":"int"
+}
+"joinWatcher":{
+  "world":"world"
+}
+"playerJoined":{
+  "id":"int",
+  "player":"player"
+}
+"playerKilled":{
+  "id":"int"
+}
+"playerMoves":[{
+  "id":"int",
+  "balls":["ball"]
+}]
+"obstackleAdd":{
+  "id":"int",
+  "pos":"point"
+}
+"obstackleRemove":{
+  "id":"int"
+}
+"foodAdd":{
+  "id":"int",
+  "ball":"ball"
+}
+"foodRemove":{
+  "id":"int"
+}
+"foodMove":{
+  "id":"int",
+  "ball":"ball"
+}
+
+//Client to Server
+
+"wantToJoin":{
+  "name":"string"
+}
+"wantToWatch":{
+}
+"move":{
+  "direction":"vector"
+}
