@@ -7,11 +7,16 @@ class Player:
         self.color = color
         self.balls = balls
 
+    def move(self):
+        for ball in self.balls:
+            ball.move()
+
 
 def testPlayer(printing=False):
     myPlayer = Player("Max", "0xFF00FF", [testBall(False),testBall(False)])
-    if printing: print(myPlayer.name)
-    if printing: print(myPlayer.balls[0].size)
+    myPlayer.move()
+    if printing: print(myPlayer.name, "== Max")
+    if printing: print(myPlayer.balls[0].position.y, "== 5.0")
     return myPlayer
 
 if __name__ == '__main__':
