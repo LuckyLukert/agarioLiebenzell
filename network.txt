@@ -51,7 +51,8 @@
 -"want to join"   //verbindet sich zu Server
 -"want to view"   //verbindet sich als watcher
 -"move"           //Richtung+Geschwindigkeit, in die sich der Client bewegen will
-
+-"shoot"          //Wenn ein Ball (wie auf agar.io mit w) geschossen wird
+-"split"          //Wenn sich der Spieler aufteilt (agar.io : Leertaste)
 
 
 //Detaillierte Übersicht der (TCP-JSON) Pakete:
@@ -102,4 +103,10 @@
 }
 "move":{
   "direction":"vector"
+}
+"shoot":{
+
+}
+"split":{
+
 }
