@@ -5,8 +5,8 @@
   "food":{"id":"ball"},
   "obstacles":{"id":"point"},
   "players":{"id":"player"},
-  "width":"int",
-  "height":"int"
+  "width":"float",
+  "height":"float"
 }
 
 "player":{
@@ -17,13 +17,13 @@
 "ball":{
   "pos":"point",
   "speed":"vector",
-  "size":"int",
+  "size":"float",
   "color":"string"
 }
 
 "point/vector":{
-  "x":"int",
-  "y":"int"
+  "x":"float",
+  "y":"float"
 }
 
 
