@@ -9,14 +9,14 @@
 
 "player":{
   "name":"string",
-  "color":"string",
   "balls":["ball"]
 }
 
 "ball":{
   "pos":"point",
   "speed":"vector",
-  "size":"int"
+  "size":"int",
+  "color":"string"
 }
 
 "point/vector":{
@@ -37,8 +37,8 @@
 -"playerKilled"   //anderer Spieler verschwindet
 -"playerMoves"    //Bewegungen von allen Spielern + speed-updates
 
--"obstackleAdd"
--"obstackleRemove"
+-"obstacleAdd"
+-"obstacleRemove"
 
 -"foodAdd"
 -"foodRemove"
@@ -72,11 +72,11 @@
   "id":"int",
   "balls":["ball"]
 }]
-"obstackleAdd":{
+"obstacleAdd":{
   "id":"int",
   "pos":"point"
 }
-"obstackleRemove":{
+"obstacleRemove":{
   "id":"int"
 }
 "foodAdd":{
