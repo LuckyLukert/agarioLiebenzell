@@ -1,7 +1,7 @@
 
 "world":{
   "food":{"id":"ball"},
-  "obstackles":{"id":"point"},
+  "obstacles":{"id":"point"},
   "players":{"id":"player"},
   "width":"int",
   "height":"int"
@@ -37,8 +37,8 @@
 -"playerKilled"   //anderer Spieler verschwindet
 -"playerMoves"    //Bewegungen von allen Spielern + speed-updates
 
--"obstackleAdd"
--"obstackleRemove"
+-"obstacleAdd"
+-"obstacleRemove"
 
 -"foodAdd"
 -"foodRemove"
@@ -72,11 +72,11 @@
   "id":"int",
   "balls":["ball"]
 }]
-"obstackleAdd":{
+"obstacleAdd":{
   "id":"int",
   "pos":"point"
 }
-"obstackleRemove":{
+"obstacleRemove":{
   "id":"int"
 }
 "foodAdd":{
