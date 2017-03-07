@@ -15,8 +15,8 @@ class World:
     def random(classs, width:float=WIDTH, height:float=HEIGHT):  #generate random Field  (width, height im Bereich von 1000)
         food = {}
         obstacles = {}
-        foodAmount = int(width*height / 100)
-        obstacleAmount = int(width*height /100000)
+        foodAmount = FOOD_AMOUNT
+        obstacleAmount = OBSTACLE_AMOUNT
         for i in range(foodAmount):
             randomBall = Ball.random(width, height, FOOD_SIZE)
             food[i] = randomBall
