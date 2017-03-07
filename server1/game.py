@@ -59,8 +59,11 @@ class Game:
                         if sizeDist < -20:  #ball2 größer
                             ball2.size += ball1.size
                             ballRemoveIds.append((playerId1, ballId1))
-        for (playerId, ballId) in ballRemoveIds:
-            self.world.players[playerId].balls.pop(ballId)
+        try:
+            for (playerId, ballId) in ballRemoveIds:
+                self.world.players[playerId].balls.pop(ballId)  #todo: fehler, falls zwei gleichzeitig entfernt werden
+        except IndexError:
+            pass
 
 
     def step(self):
