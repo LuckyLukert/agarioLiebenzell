@@ -40,6 +40,8 @@ class ServerThread:
                 except UnicodeDecodeError:
                     continue
                 except BaseException:
+                    # Remove Event
+                    eventhandler.queueEvent(Event({"event":"disconnect","sender":id}))
                     self.clients.pop(id)
                     return
                 if "\n" in data:

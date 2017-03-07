@@ -6,6 +6,12 @@ class Vector:
         self.x = x
         self.y = y
 
+    @classmethod
+    def byJSON(cls, entries):
+        v = cls(0,0)
+        v.__dict__.update(entries)
+        return v
+
     def __add__(self, other):
         return Vector(self.x+other.x, self.y+other.y)
 

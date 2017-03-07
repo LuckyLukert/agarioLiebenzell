@@ -16,6 +16,9 @@ class EventHandler:
         if event is None: return
         # callback should execute events synchronously
         print("Executing callback")
+        self.queueEvent(event)
+
+    def queueEvent(self, event):
         self.callback(event)
 
     def broadcast(self, event):

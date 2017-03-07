@@ -3,6 +3,7 @@ from json import JSONDecodeError
 from json import JSONEncoder
 from player import *
 from settings import *
+import ball
 
 # TODO implement events in network
 
@@ -22,11 +23,18 @@ def wantToJoinEvent(event, game):
 def wantToMove(event, game):
     print("Updated speed of " + str(event.sender))
     for ball in game.world.players[event.sender].balls:
-        ball.speed = event.direction
+        ball.speed = event.vector.byJSON(event.direction)
+
+def disconnectClient(event, game):
+    game.world.players.pop(event.sender)
+    game.evHandler.network.clients.pop(event.sender)
+
 
 eventsExecute = {
     'wantToJoin': wantToJoinEvent,
     'move': wantToMove,
+    'disconnect': disconnectClient,
+
     'wantToWatch': lambda event, game: {
         print("Client " + str(event.sender) + " joins as watcher!")
     },
