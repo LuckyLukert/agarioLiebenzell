@@ -1,4 +1,5 @@
 from random import *
+from settings import *
 
 
 class Vector:
@@ -40,6 +41,9 @@ class Point:
     def __sub__(self, other):
         return Vector(self.x-other.x, self.y-other.y)
 
+    def cut(self, width, height):
+        return Point(max(0.0, min(self.x, width)), max(0.0, min(self.y, height)))
+
     @classmethod
     def random(classs, width:float, height:float):
         return classs(randrange(1,width), randrange(1,height))
@@ -65,10 +69,10 @@ class Ball:
         return classs(position, speed, size)
 
 
-
     def move(self):
         self.speed = self.speed.cut()
-        self.position = self.position + self.speed
+        self.position = (self.position + self.speed).cut(WIDTH, HEIGHT)
+
 
     def reprJSON(self):
         return self.__dict__.copy()

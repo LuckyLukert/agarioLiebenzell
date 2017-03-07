@@ -19,6 +19,7 @@ class Game:
                 ball = player.balls[ballId]
                 yield(player, playerId, ball, ballId)
 
+
     def eat(self):
         foodRemoveIds = []
         for foodId in self.world.food:
@@ -41,8 +42,9 @@ class Game:
         for idd in foodRemoveIds:
             self.world.food.pop(idd)
 
-    def attack(self):
 
+
+    def attack(self):
         ballRemoveIds = []
         for (player1, playerId1, ball1, ballId1) in self.iteratePlayerBalls():
             for (player2, playerId2, ball2, ballId2) in self.iteratePlayerBalls():
