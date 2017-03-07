@@ -58,7 +58,7 @@ class Game:
                             ball2.size += ball1.size
                             ballRemoveIds.append((playerId1, ballId1))
         for (playerId, ballId) in ballRemoveIds:
-            pass  #todo: remove balls
+            self.world.players[playerId].balls.pop(ballId)
 
 
     def step(self):
