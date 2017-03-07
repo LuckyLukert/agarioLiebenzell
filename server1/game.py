@@ -1,16 +1,12 @@
 from multiprocessing import SimpleQueue
 from event import *
 from eventhandler import *
-from world import *
-from network import *
-import time
 
 class Game:
-    def __init__(self):
-        self.evHandler = EventHandler(self.clientEvt)
-        self.world = testWorld()
+    def __init__(self, evHandler:EventHandler):
+        self.evHandler = evHandler
+        self.world = World.random()
         self.eventQueue = SimpleQueue()
-        self.evHandler.start()
 
     def step(self):
         moves = []
@@ -20,6 +16,7 @@ class Game:
             self.world.players[idd].move()
 
         #Spieler fressen
+        foodRemoveIds = []
         for foodId in self.world.food:
             food = self.world.food[foodId]
             nearestId = -1
@@ -27,20 +24,20 @@ class Game:
             minDist = 1000000000
             for playerId in self.world.players:
                 player = self.world.players[playerId]
-                for ballId in range(len(player.balls)):
-                   # print(player.balls)
+                for ballId in player.balls:
                     ball = player.balls[ballId]
-                    dist = (food.position - ball.position).length()
+                    dist = len(food.position - ball.position)
                     if (dist < ball.size and dist < minDist):
                         nearestId = playerId
                         nearestBallId = ballId
                         minDist = dist
             if nearestId != -1:
                 self.world.players[nearestId].balls[nearestBallId].size += food.size
-                self.world.food.pop(foodId)
+                foodRemoveIds.append(foodId)
                 foodRemove = {"event":"foodRemove", "id":foodId}
-                self.evHandler.broadcast(Event(foodRemove))
-
+                evHandler.sendfoodRemove = Event(**foodRemove)
+        for idd in foodRemoveIds
+            self.world.food.pop(idd)
 
         #Spieler move-Events senden
         for idd in self.world.players:
@@ -50,17 +47,16 @@ class Game:
           "event": "playerMoves",
           "moves": moves
         }
-        self.evHandler.broadcast(Event(event))
+        evHandler.send(Event(**event))
 
 
     def run(self):
         while True:
-            self.step()
+            step()
             while not self.eventQueue.empty():
                 event = self.eventQueue.get()
-                event.execute(self)
-            time.sleep(5)
+                event.execute(self.world)
 
 
     def clientEvt(self, event:Event):
-        self.eventQueue.put(event)
+        eventQueue.put(event)
