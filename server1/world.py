@@ -29,7 +29,7 @@ class World:
         self.players[id] = player
 
     def reprJSON(self):
-        return __dict__.copy()
+        return self.__dict__.copy()
 
 
 def testWorld(printing = False):

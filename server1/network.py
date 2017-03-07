@@ -2,7 +2,7 @@ import socketserver
 import socket
 import threading
 import eventhandler
-from eventhandler import eventToJSON
+from eventhandler import *
 from json import JSONEncoder
 from settings import *
 
@@ -27,9 +27,8 @@ class ServerThread:
         s.listen()
         while True:
             (client, addr) = s.accept()
-
             threading.Thread(target=(self.listenClient), args=(client,self.ids,eventhandler)).start()
-            self.clients[id] = client
+            self.clients[self.ids] = client
             self.ids += 1
 
     def listenClient(self, client, id, eventhandler):
@@ -49,11 +48,11 @@ class ServerThread:
             eventhandler.proceedData(data, id)
 
     def send(self, id, data):
-        self.clients[id].send(data=data)
+        self.clients[id].send(data.encode("utf-8"))
 
     def broadcast(self, data):
         for client in self.clients:
-            client.send(data)
+            self.clients[client].send(data.encode("utf-8"))
 
 
 

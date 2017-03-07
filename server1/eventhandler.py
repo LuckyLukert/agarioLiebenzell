@@ -3,14 +3,19 @@ from event import Event
 import json
 
 class EventHandler:
-    def __init__(self, callback, network: ServerThread):
+    def __init__(self, callback):
         self.callback = callback
-        self.network = network
+        self.network = ServerThread()
+
+    def start(self):
+        self.network.start(self)
 
     def proceedData(self, data, sender):
         event = eventFromJSON(data, sender)
+        print("Event: " + str(event))
         if event is None: return
         # callback should execute events synchronously
+        print("Executing callback")
         self.callback(event)
 
     def broadcast(self, event):
@@ -30,13 +35,13 @@ class ComplexEncoder(json.JSONEncoder):
 
 
 
-def eventFromJSON(json, senderId):
+def eventFromJSON(jsonstr, senderId):
     try:
-        decode = json.JSONDecoder().decode(json)
+        decode = json.JSONDecoder().decode(jsonstr)
     except json.JSONDecodeError:
-        print(str(senderId) + " sent malformed json: " + json)
+        print(str(senderId) + " sent malformed json: " + jsonstr)
         return None
-    return Event(senderId, decode)
+    return Event(decode, senderId)
 
 
 def eventToJSON(event):

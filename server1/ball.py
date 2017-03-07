@@ -9,7 +9,7 @@ class Vector:
     def __add__(self, other):
         return Vector(self.x+other.x, self.y+other.y)
 
-    def __len__(self):
+    def length(self):
         return (self.x**2 + self.y**2)**0.5
 
     def cut(self):
@@ -18,6 +18,10 @@ class Vector:
             length = lensqr**0.5
             return Vector(self.x/length,self.y/length)
         return self
+
+    def reprJSON(self):
+        return self.__dict__.copy()
+
 
 class Point:
     def __init__(self, x:float, y:float):
@@ -34,6 +38,9 @@ class Point:
     def random(classs, width:float, height:float):
         return classs(randrange(1,width), randrange(1,height))
 
+
+    def reprJSON(self):
+        return self.__dict__.copy()
 
 
 class Ball:
@@ -55,7 +62,8 @@ class Ball:
         self.speed = self.speed.cut()
         self.position = self.position + self.speed
 
-
+    def reprJSON(self):
+        return self.__dict__.copy()
 
 
 def testBall(printing = False):
