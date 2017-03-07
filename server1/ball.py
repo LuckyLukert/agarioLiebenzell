@@ -1,13 +1,13 @@
+from random import *
 
-class Point:
-    def __init__(self, x:float, y:float):
-        self.x = x
-        self.y = y
 
 class Vector:
     def __init__(self, x:float, y:float):
         self.x = x
         self.y = y
+
+    def __add__(self, other):
+        return Vector(self.x+other.x, self.y+other.y)
 
     def cut(self):
         lensqr = self.x**2+self.y**2
@@ -16,6 +16,19 @@ class Vector:
             return Vector(self.x/length,self.y/length)
         return self
 
+class Point:
+    def __init__(self, x:float, y:float):
+        self.x = x
+        self.y = y
+
+    def __add__(self, other:Vector):
+        return Point(self.x+other.x, self.y+other.y)
+
+    @classmethod
+    def random(classs, width:float, height:float):
+        return classs(randrange(1,width), randrange(1,height))
+
+
 
 class Ball:
     def __init__(self, position:Point, speed:Vector, size:float):
@@ -23,17 +36,29 @@ class Ball:
         self.speed = speed
         self.size = size
 
+    @classmethod
+    def random(classs, width:float, height:float, size:float):
+        position = Point.random(width, height)
+        speed = Vector(0,0)
+        size = size
+        return classs(position, speed, size)
+
+
+
     def move(self):
         self.speed = self.speed.cut()
-        self.position = Point(self.position.x + self.speed.x, self.position.y + self.speed.y)
+        self.position = self.position + self.speed
+
+
 
 
 def testBall(printing = False):
     myBall = Ball(Point(1,3), Vector(0,2), 3)
     myBall.move()
     if printing: print(myBall.position.y, "== 4.0")
-
+    if printing: print(Ball.random(2000, 1000, 5).position.x, "== random")
     return myBall
+
 
 if __name__ == '__main__':
     testBall(True)
