@@ -9,6 +9,9 @@ class Vector:
     def __add__(self, other):
         return Vector(self.x+other.x, self.y+other.y)
 
+    def __len__(self):
+        return (self.x**2 + self.y**2)**0.5
+
     def cut(self):
         lensqr = self.x**2+self.y**2
         if (lensqr>1):
@@ -23,6 +26,9 @@ class Point:
 
     def __add__(self, other:Vector):
         return Point(self.x+other.x, self.y+other.y)
+
+    def __sub__(self, other):
+        return Vector(self.x-other.x, self.y-other.y)
 
     @classmethod
     def random(classs, width:float, height:float):

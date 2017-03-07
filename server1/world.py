@@ -1,5 +1,6 @@
 from player import *
 from ball import *
+from settings import *
 
 
 class World:
@@ -11,16 +12,16 @@ class World:
         self.height = height
 
     @classmethod
-    def random(classs, width:float, height:float):  #generate random Field  (width, height im Bereich von 1000)
+    def random(classs, width:float=WIDTH, height:float=HEIGHT):  #generate random Field  (width, height im Bereich von 1000)
         food = {}
         obstacles = {}
         foodAmount = int(width*height / 100)
         obstacleAmount = int(width*height /100000)
         for i in range(foodAmount):
-            randomBall = Ball.random(width, height, 5)
+            randomBall = Ball.random(width, height, FOOD_SIZE)
             food[i] = randomBall
         for i in range(obstacleAmount):
-            randomObstacle = Ball.random(width, height, 40)
+            randomObstacle = Ball.random(width, height, OBSTACLE_SIZE)
             obstacles[i] = randomObstacle
         return classs(food, obstacles, {}, width, height)
 
@@ -39,8 +40,6 @@ def testWorld(printing = False):
     myWorld = World({1:food}, {1:obstacle}, playerDict, 3, 4)
     if printing: print(myWorld.players[1].name , "== Max")
     if printing: print(World.random(2000, 1000).obstacles[0].position.x, "== random")
-
-    World.random(2000, 1000)
 
     return myWorld
 
