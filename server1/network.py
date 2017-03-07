@@ -2,7 +2,7 @@ import socketserver
 import socket
 import threading
 import eventhandler
-from event import eventToJSON
+from eventhandler import eventToJSON
 from json import JSONEncoder
 from settings import *
 
@@ -23,7 +23,7 @@ class ServerThread:
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
         print("Binding to port " + str(PORT))
-        s.bind(('localhost', PORT))
+        s.bind((socket.gethostname(), PORT))
         s.listen()
         while True:
             (client, addr) = s.accept()
@@ -36,7 +36,10 @@ class ServerThread:
         while True:
             data = ''
             while True:
-                data += client.recv(2048).decode("utf-8")
+                try:
+                    data += client.recv(2048).decode("utf-8")
+                except UnicodeDecodeError:
+                    continue
                 if "\n" in data:
                     break
             print("New data: " + data)

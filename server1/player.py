@@ -16,6 +16,8 @@ class Player:
         balls = [Ball.random(width, height, 10)]
         return classs(name, color, balls)
 
+    def reprJSON(self):
+        return __dict__.copy()
 
 def testPlayer(printing=False):
     myPlayer = Player("Max", "0xFF00FF", [testBall(False),testBall(False)])

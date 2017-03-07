@@ -28,6 +28,8 @@ class World:
     def addPlayer(self, id:int, player:Player):
         self.players[id] = player
 
+    def reprJSON(self):
+        return __dict__.copy()
 
 
 def testWorld(printing = False):
@@ -42,6 +44,8 @@ def testWorld(printing = False):
     if printing: print(World.random(2000, 1000).obstacles[0].position.x, "== random")
 
     return myWorld
+
+
 
 
 if __name__ == '__main__':

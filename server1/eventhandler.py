@@ -1,7 +1,6 @@
 from network import ServerThread
-from event import eventFromJSON
-from event import eventToJSON
-
+from event import Event
+import json
 
 class EventHandler:
     def __init__(self, callback, network: ServerThread):
@@ -20,3 +19,26 @@ class EventHandler:
 
     def send(self, event, id):
         self.network.send(id, eventToJSON(event))
+
+
+class ComplexEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if hasattr(obj,'reprJSON'):
+            return obj.reprJSON()
+        else:
+            return json.JSONEncoder.default(self, obj)
+
+
+
+def eventFromJSON(json, senderId):
+    try:
+        decode = json.JSONDecoder().decode(json)
+    except json.JSONDecodeError:
+        print(str(senderId) + " sent malformed json: " + json)
+        return None
+    return Event(senderId, decode)
+
+
+def eventToJSON(event):
+    decode = json.dumps(event.reprJSON(), cls=ComplexEncoder)
+    return decode

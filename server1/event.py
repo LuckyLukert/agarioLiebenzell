@@ -24,20 +24,6 @@ eventsExecute = {
 }
 
 
-def eventFromJSON(json, senderId):
-    try:
-        decode = JSONDecoder().decode(json)
-    except JSONDecodeError:
-        print(str(senderId) + " sent malformed json: " + json)
-        return None
-    return Event(senderId, decode)
-
-
-def eventToJSON(event):
-    enc = event.__dict__.copy()
-    enc.pop("sender")
-    decode = JSONEncoder().encode(enc)
-    return decode
 
 
 class Event:
@@ -50,3 +36,7 @@ class Event:
     def execute(self, game):
         eventsExecute[self.event](self, game)
 
+    def reprJSON(self):
+        enc = __dict__.copy()
+        enc.pop("sender")
+        return enc
