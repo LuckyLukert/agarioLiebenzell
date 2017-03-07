@@ -39,6 +39,9 @@ class ServerThread:
                     data += client.recv(2048).decode("utf-8")
                 except UnicodeDecodeError:
                     continue
+                except BaseException:
+                    self.clients.pop(id)
+                    return
                 if "\n" in data:
                     break
             print("New data: " + data)
@@ -48,7 +51,11 @@ class ServerThread:
             eventhandler.proceedData(data, id)
 
     def send(self, id, data):
-        self.clients[id].send((data + "\n").encode("utf-8"))
+        try:
+            self.clients[id].send((data + "\n").encode("utf-8"))
+        except BaseException:
+            print("Tried to send to closed socket")
+            return
 
     def broadcast(self, data):
         for client in self.clients:

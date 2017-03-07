@@ -61,7 +61,7 @@ class Game:
             while not self.eventQueue.empty():
                 event = self.eventQueue.get()
                 event.execute(self)
-            time.sleep(5)
+            time.sleep(0.1)
 
 
     def clientEvt(self, event:Event):

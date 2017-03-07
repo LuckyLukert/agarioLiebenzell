@@ -44,10 +44,12 @@ class Point:
 
 
 class Ball:
-    def __init__(self, position:Point, speed:Vector, size:float):
+    def __init__(self, position:Point, speed:Vector, size:float, color="#FF00FF"):
         self.position = position
         self.speed = speed
         self.size = size
+        self.color = color
+
 
     @classmethod
     def random(classs, width:float, height:float, size:float):

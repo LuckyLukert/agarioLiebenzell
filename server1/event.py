@@ -1,28 +1,37 @@
 from json import JSONDecoder
 from json import JSONDecodeError
 from json import JSONEncoder
-
+from player import *
+from settings import *
 
 # TODO implement events in network
 
 def wantToJoinEvent(event, game):
     try:
         print("Client " + event.name + " wants to join")
+        player = Player.random(str(event.name), WIDTH, HEIGHT)
+        game.world.addPlayer(event.sender, player)
         ev1 = Event({"event":"join", "id":event.sender,"world":game.world})
+
         game.evHandler.send(ev1, event.sender)
+
     except AttributeError:
         print("ERR: Client " + str(event.sender) + " sent no name")
         pass
+
+def wantToMove(event, game):
+    print("Updated speed of " + str(event.sender))
+    for ball in game.world.players[event.sender].balls:
+        ball.speed = event.direction
+
 eventsExecute = {
     'wantToJoin': wantToJoinEvent,
-    'move': lambda event, game: {
-        print("Client " + event.sender + " moves " + str(event.direction))
-    },
+    'move': wantToMove,
     'wantToWatch': lambda event, game: {
-        print("Client " + event.sender + " joins as watcher!")
+        print("Client " + str(event.sender) + " joins as watcher!")
     },
     'shoot': lambda event, game: {
-        print("Client " + event.sender + " shoots!")
+        print("Client " + str(event.sender) + " shoots!")
     }
     # Add events
 
