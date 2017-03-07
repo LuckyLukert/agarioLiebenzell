@@ -29,7 +29,7 @@ class Game:
             minDist = 1000000000
             for (player, playerId, ball, ballId) in self.iteratePlayerBalls():
                 dist = (food.position - ball.position).length()
-                if (dist < ball.size and dist < minDist):
+                if (dist < ball.getRadius() and dist < minDist):
                     nearestId = playerId
                     nearestBallId = ballId
                     minDist = dist
@@ -51,8 +51,8 @@ class Game:
                 if (playerId1 != playerId2):  #unterschiedliche Spieler
                     dist = (ball1.position - ball2.position).length()
                     sizeDist = ball1.size - ball2.size
-                    sizeSum = ball1.size + ball2.size
-                    if dist < sizeSum*2:  #nah genug
+                    biggerRadius = max(ball1.getRadius(), ball2.getRadius())
+                    if dist < biggerRadius:  #nah genug
                         if sizeDist > 20:  #ball1 größer
                             ball1.size += ball2.size
                             ballRemoveIds.append((playerId2, ballId2))

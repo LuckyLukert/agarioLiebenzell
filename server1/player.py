@@ -12,7 +12,7 @@ class Player:
 
     @classmethod
     def random(classs, name:str, width:float, height:float):
-        balls = [Ball.random(width, height, 10)]
+        balls = [Ball.random(width, height, PLAYER_START_SIZE)]
         return classs(name, balls)
 
     def reprJSON(self):

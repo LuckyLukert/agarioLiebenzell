@@ -68,6 +68,8 @@ class Ball:
         size = size
         return classs(position, speed, size)
 
+    def getRadius(self):
+        return self.size**0.5
 
     def move(self):
         self.speed = self.speed.cut()
