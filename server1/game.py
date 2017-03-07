@@ -20,6 +20,7 @@ class Game:
             self.world.players[idd].move()
 
         #Spieler fressen
+        foodRemoveIds = []
         for foodId in self.world.food:
             food = self.world.food[foodId]
             nearestId = -1
@@ -37,10 +38,11 @@ class Game:
                         minDist = dist
             if nearestId != -1:
                 self.world.players[nearestId].balls[nearestBallId].size += food.size
-                self.world.food.pop(foodId)
+                foodRemoveIds.append(foodId)
                 foodRemove = {"event":"foodRemove", "id":foodId}
                 self.evHandler.broadcast(Event(foodRemove))
-
+        for idd in foodRemoveIds:
+            self.world.food.pop(idd)
 
         #Spieler move-Events senden
         for idd in self.world.players:
