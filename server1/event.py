@@ -55,7 +55,10 @@ class Event:
     #    print("Event created [name=" + str(self.event) + "; sender=" + str(sender) + "]")
 
     def execute(self, game):
-        eventsExecute[self.event](self, game)
+        try:
+            eventsExecute[self.event](self, game)
+        except KeyError:
+            pass
 
     def reprJSON(self):
         enc = self.__dict__.copy()

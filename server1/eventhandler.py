@@ -12,7 +12,7 @@ class EventHandler:
 
     def proceedData(self, data, sender):
         event = eventFromJSON(data, sender)
-        print("Received Event: " + str(event))
+        print("Received Event: [" + str(sender) + "]: " + str(event))
         if event is None: return
         # callback should execute events synchronously
      #   print("Executing callback")
