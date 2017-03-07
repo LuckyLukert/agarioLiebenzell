@@ -42,7 +42,7 @@ class ServerThread:
                 except BaseException:
                     # Remove Event
                     eventhandler.queueEvent(Event({"event":"disconnect","sender":id}))
-                    self.clients.pop(id)
+                    #self.clients.pop(id)
                     return
                 if "\n" in data:
                     break
@@ -50,7 +50,8 @@ class ServerThread:
             #client.send( bytearray("Agar IO Test: Recv " +data, "utf-8"))
 
             # Fire event
-            eventhandler.proceedData(data, id)
+            for datas in data.split("\n"):
+                if datas is not None and datas != '': eventhandler.proceedData(datas, id)
 
     def send(self, id, data):
         try:
