@@ -1,12 +1,16 @@
 from multiprocessing import SimpleQueue
 from event import *
 from eventhandler import *
+from world import *
+from network import *
+import time
 
 class Game:
-    def __init__(self, evHandler:EventHandler):
-        self.evHandler = evHandler
-        self.world = World.random()
+    def __init__(self):
+        self.evHandler = EventHandler(self.clientEvt)
+        self.world = testWorld()
         self.eventQueue = SimpleQueue()
+        self.evHandler.start()
 
     def step(self):
         moves = []
@@ -24,9 +28,10 @@ class Game:
             minDist = 1000000000
             for playerId in self.world.players:
                 player = self.world.players[playerId]
-                for ballId in player.balls:
+                for ballId in range(len(player.balls)):
+                   # print(player.balls)
                     ball = player.balls[ballId]
-                    dist = len(food.position - ball.position)
+                    dist = (food.position - ball.position).length()
                     if (dist < ball.size and dist < minDist):
                         nearestId = playerId
                         nearestBallId = ballId
@@ -35,8 +40,8 @@ class Game:
                 self.world.players[nearestId].balls[nearestBallId].size += food.size
                 foodRemoveIds.append(foodId)
                 foodRemove = {"event":"foodRemove", "id":foodId}
-                evHandler.sendfoodRemove = Event(**foodRemove)
-        for idd in foodRemoveIds
+                self.evHandler.broadcast(Event(foodRemove))
+        for idd in foodRemoveIds:
             self.world.food.pop(idd)
 
         #Spieler move-Events senden
@@ -47,16 +52,17 @@ class Game:
           "event": "playerMoves",
           "moves": moves
         }
-        evHandler.send(Event(**event))
+        self.evHandler.broadcast(Event(event))
 
 
     def run(self):
         while True:
-            step()
+            self.step()
             while not self.eventQueue.empty():
                 event = self.eventQueue.get()
-                event.execute(self.world)
+                event.execute(self)
+            time.sleep(5)
 
 
     def clientEvt(self, event:Event):
-        eventQueue.put(event)
+        self.eventQueue.put(event)
