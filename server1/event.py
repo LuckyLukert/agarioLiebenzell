@@ -3,8 +3,6 @@ from json import JSONDecodeError
 from json import JSONEncoder
 
 
-import world
-
 # TODO implement events in network
 eventsExecute = {
     'wantToJoin': lambda event, game: {
@@ -14,7 +12,15 @@ eventsExecute = {
     },
     'move': lambda event, game: {
         print("Client " + event.sender + " moves " + str(event.direction))
+    },
+    'wantToWatch': lambda event, game: {
+        print("Client " + event.sender + " joins as watcher!")
+    },
+    'shoot': lambda event, game: {
+        print("Client " + event.sender + " shoots!")
     }
+    # Add events
+
 }
 
 

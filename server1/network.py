@@ -4,6 +4,7 @@ import threading
 import eventhandler
 from event import eventToJSON
 from json import JSONEncoder
+from settings import *
 
 class ServerThread:
 
@@ -21,8 +22,8 @@ class ServerThread:
 
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-        print("Binding to port 60001")
-        s.bind(('localhost', 60001))
+        print("Binding to port " + str(PORT))
+        s.bind(('localhost', PORT))
         s.listen()
         while True:
             (client, addr) = s.accept()
@@ -64,6 +65,6 @@ if __name__ == "__main__":
 
     # Test
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.connect(('localhost', 60001))
+    s.connect(('localhost', PORT))
     print("Sending to socket...")
     s.send("{\"event\":\"wantToJoin\", \"name\":\"Simon\"}\n".encode("utf-8"))
