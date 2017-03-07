@@ -47,7 +47,7 @@ class Game:
         #Spieler move-Events senden
         for idd in self.world.players:
             player = self.world.players[idd]
-            moves.append({"id":player.id, "balls": player.balls})
+            moves.append({"id":idd, "balls": player.balls})
         event = {
           "event": "playerMoves",
           "moves": moves

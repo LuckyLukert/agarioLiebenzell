@@ -48,11 +48,11 @@ class ServerThread:
             eventhandler.proceedData(data, id)
 
     def send(self, id, data):
-        self.clients[id].send(data.encode("utf-8"))
+        self.clients[id].send((data + "\n").encode("utf-8"))
 
     def broadcast(self, data):
         for client in self.clients:
-            self.clients[client].send(data.encode("utf-8"))
+            self.send(client, data)
 
 
 

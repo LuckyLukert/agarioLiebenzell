@@ -8,7 +8,7 @@ from json import JSONEncoder
 def wantToJoinEvent(event, game):
     try:
         print("Client " + event.name + " wants to join")
-        ev1 = Event({"name":"join", "id":event.sender,"world":game.world})
+        ev1 = Event({"event":"join", "id":event.sender,"world":game.world})
         game.evHandler.send(ev1, event.sender)
     except AttributeError:
         print("ERR: Client " + str(event.sender) + " sent no name")
