@@ -1,14 +1,19 @@
 from json import JSONDecoder
 from json import JSONDecodeError
+from json import JSONEncoder
+
+
 import world
 
 # TODO implement events in network
 eventsExecute = {
-    'wantToJoin': lambda event, world: {
+    'wantToJoin': lambda event, game: {
+        print("Client " + event.name + " wants to join")
+        # Handle join
 
     },
-    'move': lambda event, world: {
-
+    'move': lambda event, game: {
+        print("Client " + event.sender + " moves " + str(event.direction))
     }
 }
 
@@ -21,12 +26,21 @@ def eventFromJSON(json, senderId):
         return None
     return Event(senderId, decode)
 
+
+def eventToJSON(event):
+    enc = event.__dict__.copy()
+    enc.pop("sender")
+    decode = JSONEncoder().encode(enc)
+    return decode
+
+
 class Event:
     def __init__(self, sender, entries):
         self.event = None
+        self.sender = sender
         self.__dict__.update(entries)
+        print("Sender " + str(sender))
 
-
-    def execute(self, world):
-        eventsExecute[self.event](self, world)
+    def execute(self, game):
+        eventsExecute[self.event](self, game)
 

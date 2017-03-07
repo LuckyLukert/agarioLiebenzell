@@ -2,6 +2,7 @@ import socketserver
 import socket
 import threading
 import eventhandler
+from event import eventToJSON
 from json import JSONEncoder
 
 class ServerThread:
@@ -26,7 +27,7 @@ class ServerThread:
         while True:
             (client, addr) = s.accept()
 
-            threading.Thread(target=(self.listenClient), args=(client,id,eventhandler)).start()
+            threading.Thread(target=(self.listenClient), args=(client,self.ids,eventhandler)).start()
             self.clients[id] = client
             self.ids += 1
 
@@ -38,7 +39,7 @@ class ServerThread:
                 if "\n" in data:
                     break
             print("New data: " + data)
-            client.send( bytearray("Agar IO Test: Recv " +data, "utf-8"))
+            #client.send( bytearray("Agar IO Test: Recv " +data, "utf-8"))
 
             # Fire event
             eventhandler.proceedData(data, id)
@@ -53,7 +54,8 @@ class ServerThread:
 
 
 def callbackTest(event):
-    print(JSONEncoder().encode(event.__dict__))
+    print("Ev to json" +eventToJSON(event))
+    print("Native json: " + JSONEncoder().encode(event.__dict__))
 
 if __name__ == "__main__":
     st = ServerThread()
@@ -64,4 +66,4 @@ if __name__ == "__main__":
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.connect(('localhost', 60001))
     print("Sending to socket...")
-    s.send("{\"test\":\"test\"}\n".encode("utf-8"))
+    s.send("{\"event\":\"wantToJoin\", \"name\":\"Simon\"}\n".encode("utf-8"))
