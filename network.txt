@@ -16,7 +16,7 @@
 }
 
 "ball":{
-  "pos":"point",
+  "position":"point",
   "speed":"vector",
   "size":"float",
   "color":"string"
