@@ -12,10 +12,10 @@ class EventHandler:
 
     def proceedData(self, data, sender):
         event = eventFromJSON(data, sender)
-        print("Event: " + str(event))
+        print("Received Event: " + str(event))
         if event is None: return
         # callback should execute events synchronously
-        print("Executing callback")
+     #   print("Executing callback")
         self.queueEvent(event)
 
     def queueEvent(self, event):
