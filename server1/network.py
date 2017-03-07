@@ -1,10 +1,10 @@
-import socketserver
 import socket
 import threading
 import eventhandler
 from eventhandler import *
 from json import JSONEncoder
 from settings import *
+from event import Event
 
 class ServerThread:
 
