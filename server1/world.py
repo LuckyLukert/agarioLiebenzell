@@ -10,6 +10,8 @@ class World:
         self.width = width
         self.height = height
 
+    def addPlayer(self, id:int, player:Player):
+        self.players[id] = player
 
 def testWorld(printing = False):
     player1 = testPlayer()
