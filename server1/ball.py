@@ -21,9 +21,9 @@ class Vector:
 
     def cut(self):
         lensqr = self.x**2+self.y**2
-        if (lensqr>1):
+        if (lensqr>SPEED):
             length = lensqr**0.5
-            return Vector(self.x/length,self.y/length)
+            return Vector(SPEED*self.x/length,SPEED*self.y/length)
         return self
 
     def reprJSON(self):
