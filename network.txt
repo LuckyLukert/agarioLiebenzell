@@ -1,5 +1,6 @@
 # Encoding: UTF-8
-
+# Protokoll: TCP
+# Port: 60001
 
 "world":{
   "food":{"id":"ball"},
