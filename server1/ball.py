@@ -79,8 +79,8 @@ class Ball:
         return self.size**0.5
 
     def move(self):
-        self.speed *= 0.5
         self.speed += self.moveDirection
+        self.speed *= 0.5
 
         self.position = (self.position + self.speed).cut(WIDTH, HEIGHT)
 
@@ -88,10 +88,10 @@ class Ball:
         self.moveDirection=direction.cut()
 
     def split(self):
-        backPos = self.position - self.speed.cut()*(1/SPEED)*self.getRadius()*0
-        frontPos = self.position + self.speed.cut()*(1/SPEED)*self.getRadius()*2
+        backPos = self.position + self.speed.cut()*(1/SPEED)*self.getRadius()*-0.5
+        frontPos = self.position + self.speed.cut()*(1/SPEED)*self.getRadius()*1.5
         ballBack = Ball(backPos, self.speed, self.size/2, self.color)
-        ballFront = Ball(frontPos, self.speed, self.size/2, self.color)
+        ballFront = Ball(frontPos, self.speed*10, self.size/2, self.color)
         return (ballBack, ballFront)
 
 
