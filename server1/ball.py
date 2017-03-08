@@ -47,6 +47,9 @@ class Point:
         else:
             return Vector(self.x-other.x, self.y-other.y)
 
+    def __mul__(self, scalar:int):
+        return Point(self.x*scalar, self.y*scalar)
+
     def cut(self, width, height):
         return Point(max(0.0, min(self.x, width)), max(0.0, min(self.y, height)))
 
@@ -66,6 +69,7 @@ class Ball:
         self.size = size
         self.color = color
         self.moveDirection = Vector(0,0)  #no JSON
+        self.gravity = 500  #100 ist Maximum
 
 
     @classmethod
@@ -79,6 +83,7 @@ class Ball:
         return self.size**0.5
 
     def move(self):
+        self.gravity = min(500, self.gravity+1)
         self.speed += self.moveDirection
         self.speed *= 0.5
 
@@ -92,7 +97,16 @@ class Ball:
         frontPos = self.position + self.speed.cut()*(1/SPEED)*self.getRadius()*1.5
         ballBack = Ball(backPos, self.speed, self.size/2, self.color)
         ballFront = Ball(frontPos, self.speed*10, self.size/2, self.color)
+        ballBack.gravity = -200
+        ballFront.gravity = -200
         return (ballBack, ballFront)
+
+    def gravityTo(self, midpoint:Point):
+        if (self.gravity < 0):
+            return
+        dist = midpoint - self.position
+        dist = dist * (self.gravity / 10000.0)
+        self.position = (self.position + dist).cut(WIDTH, HEIGHT)
 
 
     def reprJSON(self):

@@ -7,8 +7,14 @@ class Player:
         self.balls = balls
 
     def move(self):
+        midpoint = Point(0,0)
         for ball in self.balls:
             ball.move()
+            midpoint = midpoint + ball.position
+        midpoint = midpoint * (1/len(self.balls))
+        for ball in self.balls:
+            ball.gravityTo(midpoint)
+
 
     def moveCommand(self, direction:Vector):
         for ball in self.balls:
