@@ -69,11 +69,11 @@ class Ball:
 
 
     @classmethod
-    def random(classs, width:float, height:float, size:float):
+    def random(classs, width:float, height:float, size:float, color="#FF00FF"):
         position = Point.random(width, height)
         speed = Vector(0,0)
         size = size
-        return classs(position, speed, size)
+        return classs(position, speed, size, color)
 
     def getRadius(self):
         return self.size**0.5

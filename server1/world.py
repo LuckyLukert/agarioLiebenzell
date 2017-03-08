@@ -2,6 +2,8 @@ from player import *
 from ball import *
 from settings import *
 
+import random
+r = lambda: random.randint(0,255)
 
 class World:
     def __init__(self, food:{int:Ball}, obstacles:{int:Ball}, players:{int:Player}, width:float, height:float):
@@ -18,10 +20,10 @@ class World:
         foodAmount = FOOD_AMOUNT
         obstacleAmount = OBSTACLE_AMOUNT
         for i in range(foodAmount):
-            randomBall = Ball.random(width, height, FOOD_SIZE)
+            randomBall = Ball.random(width, height, FOOD_SIZE, '#%02X%02X%02X' % (r(), r(), r()))
             food[i] = randomBall
         for i in range(obstacleAmount):
-            randomObstacle = Ball.random(width, height, OBSTACLE_SIZE)
+            randomObstacle = Ball.random(width, height, OBSTACLE_SIZE, "#00FF00")
             obstacles[i] = randomObstacle
         return classs(food, obstacles, {}, width, height)
 
