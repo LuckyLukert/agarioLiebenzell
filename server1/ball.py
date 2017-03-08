@@ -65,6 +65,7 @@ class Ball:
         self.speed = speed
         self.size = size
         self.color = color
+        self.moveDirection = Vector(0,0)  #no JSON
 
 
     @classmethod
@@ -78,8 +79,13 @@ class Ball:
         return self.size**0.5
 
     def move(self):
-        self.speed = self.speed.cut()
+        self.speed *= 0.5
+        self.speed += self.moveDirection
+
         self.position = (self.position + self.speed).cut(WIDTH, HEIGHT)
+
+    def moveCommand(self, direction:Vector):
+        self.moveDirection=direction.cut()
 
     def split(self):
         backPos = self.position - self.speed.cut()*(1/SPEED)*self.getRadius()*0

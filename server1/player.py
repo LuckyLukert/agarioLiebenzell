@@ -10,6 +10,10 @@ class Player:
         for ball in self.balls:
             ball.move()
 
+    def moveCommand(self, direction:Vector):
+        for ball in game.world.players[event.sender].balls:
+            ball.moveCommand(direction)
+
     def split(self):
         newBalls = []
         for ball in self.balls:

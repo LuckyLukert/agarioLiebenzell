@@ -22,8 +22,7 @@ def wantToJoinEvent(event, game):
 
 def wantToMove(event, game):
     #print("Updated speed of " + str(event.sender))
-    for ball in game.world.players[event.sender].balls:
-        ball.speed = Vector.byJSON(event.direction)
+    game.world.players[event.sender].moveCommand(Vector.byJSON(event.direction))
 
 def disconnectClient(event, game):
     game.world.players.pop(event.sender)
