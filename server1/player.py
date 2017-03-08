@@ -10,6 +10,17 @@ class Player:
         for ball in self.balls:
             ball.move()
 
+    def split(self):
+        newBalls = []
+        for ball in self.balls:
+            if ball.size < PLAYER_START_SIZE * 2:
+                newBalls.append(ball)
+                continue
+            (b1, b2) = ball.split()
+            newBalls.append(b1)
+            newBalls.append(b2)
+        self.balls = newBalls
+
     @classmethod
     def random(classs, name:str, width:float, height:float):
         balls = [Ball.random(width, height, PLAYER_START_SIZE)]

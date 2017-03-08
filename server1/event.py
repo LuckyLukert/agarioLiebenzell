@@ -29,10 +29,16 @@ def disconnectClient(event, game):
     game.world.players.pop(event.sender)
     game.evHandler.network.clients.pop(event.sender)
 
+def splitEvent(event, game):
+    player = game.world.players[event.sender]
+    player.split()
+
+
 
 eventsExecute = {
     'wantToJoin': wantToJoinEvent,
     'move': wantToMove,
+    'split': splitEvent,
     'disconnect': disconnectClient,
     'wantToWatch': lambda event, game: {
         print("Client " + str(event.sender) + " joins as watcher!")

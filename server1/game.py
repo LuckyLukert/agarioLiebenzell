@@ -48,17 +48,24 @@ class Game:
         ballRemoveIds = []
         for (player1, playerId1, ball1, ballId1) in self.iteratePlayerBalls():
             for (player2, playerId2, ball2, ballId2) in self.iteratePlayerBalls():
-                if (playerId1 != playerId2):  #unterschiedliche Spieler
-                    dist = (ball1.position - ball2.position).length()
-                    sizeDist = ball1.size - ball2.size
-                    biggerRadius = max(ball1.getRadius(), ball2.getRadius())
-                    if dist < biggerRadius:  #nah genug
-                        if sizeDist > 20:  #ball1 größer
-                            ball1.size += ball2.size
-                            ballRemoveIds.append((playerId2, ballId2))
-                        if sizeDist < -20:  #ball2 größer
-                            ball2.size += ball1.size
-                            ballRemoveIds.append((playerId1, ballId1))
+                dist = (ball1.position - ball2.position).length()
+                radianDist = ball1.getRadius() - ball2.getRadius()
+                biggerRadius = max(ball1.getRadius(), ball2.getRadius())
+                if ((playerId1==playerId2 and ballId1 == ballId2) or (playerId1, ballId1) in ballRemoveIds or (playerId2, ballId2) in ballRemoveIds):
+                    continue
+                if dist < biggerRadius:  #nah genug
+                    if (playerId1 != playerId2):  #unterschiedliche Spieler
+                        leastChange = sqrt(PLAYER_START_SIZE)
+                    else:
+                        leastChange = 0  #gleicher Spieler kann immer joinen
+
+                    if radianDist > leastChange:  #ball1 größer
+                        ball1.size += ball2.size
+                        ballRemoveIds.append((playerId2, ballId2))
+                    if radianDist <= -leastChange:  #ball2 größer
+                        ball2.size += ball1.size
+                        ballRemoveIds.append((playerId1, ballId1))
+
         try:
             for (playerId, ballId) in ballRemoveIds:
                 self.world.players[playerId].balls.pop(ballId)  #todo: fehler, falls zwei gleichzeitig entfernt werden
@@ -98,7 +105,7 @@ class Game:
             while not self.eventQueue.empty():
                 event = self.eventQueue.get()
                 event.execute(self)
-            time.sleep(0.1)
+            time.sleep(0.05)
 
 
     def clientEvt(self, event:Event):

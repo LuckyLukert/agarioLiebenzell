@@ -16,6 +16,9 @@ class Vector:
     def __add__(self, other):
         return Vector(self.x+other.x, self.y+other.y)
 
+    def __mul__(self, scalar:int):
+        return Vector(self.x*scalar, self.y*scalar)
+
     def length(self):
         return (self.x**2 + self.y**2)**0.5
 
@@ -39,7 +42,10 @@ class Point:
         return Point(self.x+other.x, self.y+other.y)
 
     def __sub__(self, other):
-        return Vector(self.x-other.x, self.y-other.y)
+        if isinstance(other, Vector):
+            return Point(self.x-other.x, self.y-other.y)
+        else:
+            return Vector(self.x-other.x, self.y-other.y)
 
     def cut(self, width, height):
         return Point(max(0.0, min(self.x, width)), max(0.0, min(self.y, height)))
@@ -74,6 +80,13 @@ class Ball:
     def move(self):
         self.speed = self.speed.cut()
         self.position = (self.position + self.speed).cut(WIDTH, HEIGHT)
+
+    def split(self):
+        backPos = self.position - self.speed.cut()*(1/SPEED)*self.getRadius()*0
+        frontPos = self.position + self.speed.cut()*(1/SPEED)*self.getRadius()*2
+        ballBack = Ball(backPos, self.speed, self.size/2, self.color)
+        ballFront = Ball(frontPos, self.speed, self.size/2, self.color)
+        return (ballBack, ballFront)
 
 
     def reprJSON(self):
